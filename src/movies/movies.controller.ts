@@ -49,5 +49,4 @@ export class MoviesController {
       ...updateData,
     };
   }
-
 }
