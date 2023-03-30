@@ -1,3 +1,5 @@
+import { Movie } from './entities/movie.entity';
+import { MoviesService } from './movies.service';
 import { Controller, Get, Post } from '@nestjs/common';
 import { Body, Delete, Param, Patch, Query } from '@nestjs/common/decorators';
 
@@ -5,9 +7,13 @@ import { Body, Delete, Param, Patch, Query } from '@nestjs/common/decorators';
 // 따라서 @Get()을 해도 '/'가 아닌 '/movies'의 경로 지정
 @Controller('movies')
 export class MoviesController {
+  // 서비스에서 가져오기 위해 constructor 생성
+  constructor(private readonly MoviesService: MoviesService) {}
+
+  // getAll을 MovieService에서 가져오기
   @Get()
-  getAll() {
-    return 'This will return all movies';
+  getAll(): Movie[] {
+    return this.MoviesService.getAll();
   }
 
   // 검색
@@ -23,9 +29,10 @@ export class MoviesController {
   // 함수에 파라미터 넣을 때
   // @Param()을 이용해 @Get()의 params와 이름 같아야 함(ex: id)
   // 매개변수는 이름 다르게 해도 무방(movieId)
+  // 서비스에서 가져오기로 변경
   @Get(':id')
-  getOne(@Param('id') movieId: string) {
-    return `This will return one movie with the id: ${movieId}`;
+  getOne(@Param('id') movieId: string): Movie {
+    return this.MoviesService.getOne(movieId);
   }
 
   // 같은 방식으로 @Post @Delete @Patch 작성
@@ -33,12 +40,12 @@ export class MoviesController {
   // movieData 안의 body를 가져오기 위한 @Body 데코레이터
   create(@Body() movieData) {
     // 이러면 insomnia preview에 작성한 데이터 뜸
-    return movieData;
+    return this.MoviesService.create(movieData);
   }
 
   @Delete(':id')
   remove(@Param('id') movieId: string) {
-    return `This will delete a movie with the id: ${movieId}`;
+    return this.MoviesService.deleteOne(movieId);
   }
 
   // @Body()에 updateData 추가
