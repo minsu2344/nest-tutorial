@@ -25,3 +25,4 @@ export class AppController {
     return 'hi hi';
   }
 }
+// controller는 url을 가져오는 오고 함수를 실행하는 역할
