@@ -14,7 +14,7 @@ export class MoviesController {
   // 함수에 파라미터 넣을 때
   // @Param()을 이용해 @Get()의 params와 이름 같아야 함(ex: id)
   // 매개변수는 이름 다르게 해도 무방(movieId)
-  @Get('/:id')
+  @Get(':id')
   getOne(@Param('id') movieId: string) {
     return `This will return one movie with the id: ${movieId}`;
   }
@@ -27,13 +27,13 @@ export class MoviesController {
     return movieData;
   }
 
-  @Delete('/:id')
+  @Delete(':id')
   remove(@Param('id') movieId: string) {
     return `This will delete a movie with the id: ${movieId}`;
   }
 
   // @Body()에 updateData 추가
-  @Patch('/:id')
+  @Patch(':id')
   patch(@Param('id') movieId: string, @Body() updateData) {
     return {
       updatedMovie: movieId,
