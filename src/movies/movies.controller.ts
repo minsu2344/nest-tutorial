@@ -1,5 +1,5 @@
 import { Controller, Get, Post } from '@nestjs/common';
-import { Body, Delete, Param, Patch } from '@nestjs/common/decorators';
+import { Body, Delete, Param, Patch, Query } from '@nestjs/common/decorators';
 
 // @Controller()에 있는 'movies가 컨트롤러의 기본 url이 됨
 // 따라서 @Get()을 해도 '/'가 아닌 '/movies'의 경로 지정
@@ -8,6 +8,15 @@ export class MoviesController {
   @Get()
   getAll() {
     return 'This will return all movies';
+  }
+
+  // 검색
+  // params를 받는 데코레이터보다 앞에 있어야 함
+  //  뒤에 있으면 search를 id로 인식
+  @Get('search')
+  // @Query를 이용해 쿼리를 매개변수로 받아옴
+  search(@Query('year') searchingYear: string) {
+    return `searching movie made after ${searchingYear}`;
   }
 
   // params로 id 전달
@@ -41,5 +50,4 @@ export class MoviesController {
     };
   }
 
-  // 검색
 }
