@@ -32,8 +32,14 @@ export class MoviesController {
     return `This will delete a movie with the id: ${movieId}`;
   }
 
+  // @Body()에 updateData 추가
   @Patch('/:id')
-  patch(@Param('id') movieId: string) {
-    return `This will patch a movie with the id: ${movieId}`;
+  patch(@Param('id') movieId: string, @Body() updateData) {
+    return {
+      updatedMovie: movieId,
+      ...updateData,
+    };
   }
+
+  // 검색
 }
