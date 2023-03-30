@@ -1,5 +1,5 @@
 import { Controller, Get, Post } from '@nestjs/common';
-import { Delete, Param, Patch } from '@nestjs/common/decorators';
+import { Body, Delete, Param, Patch } from '@nestjs/common/decorators';
 
 // @Controller()에 있는 'movies가 컨트롤러의 기본 url이 됨
 // 따라서 @Get()을 해도 '/'가 아닌 '/movies'의 경로 지정
@@ -21,8 +21,10 @@ export class MoviesController {
 
   // 같은 방식으로 @Post @Delete @Patch 작성
   @Post()
-  create() {
-    return 'This will create a movie';
+  // movieData 안의 body를 가져오기 위한 @Body 데코레이터
+  create(@Body() movieData) {
+    // 이러면 insomnia preview에 작성한 데이터 뜸
+    return movieData;
   }
 
   @Delete('/:id')
