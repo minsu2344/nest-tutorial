@@ -1,3 +1,4 @@
+import { CreateMovieDto } from './dto/create-movie.dto';
 import { Movie } from './entities/movie.entity';
 import { MoviesService } from './movies.service';
 import { Controller, Get, Post } from '@nestjs/common';
@@ -21,7 +22,7 @@ export class MoviesController {
   //  뒤에 있으면 search를 id로 인식
   @Get('search')
   // @Query를 이용해 쿼리를 매개변수로 받아옴
-  search(@Query('year') searchingYear: string) {
+  search(@Query('year') searchingYear: number) {
     return `searching movie made after ${searchingYear}`;
   }
 
@@ -31,26 +32,26 @@ export class MoviesController {
   // 매개변수는 이름 다르게 해도 무방(movieId)
   // 서비스에서 가져오기로 변경
   @Get(':id')
-  getOne(@Param('id') movieId: string): Movie {
+  getOne(@Param('id') movieId: number): Movie {
     return this.MoviesService.getOne(movieId);
   }
 
   // 같은 방식으로 @Post @Delete @Patch 작성
   @Post()
   // movieData 안의 body를 가져오기 위한 @Body 데코레이터
-  create(@Body() movieData) {
+  create(@Body() movieData: CreateMovieDto) {
     // 이러면 insomnia preview에 작성한 데이터 뜸
     return this.MoviesService.create(movieData);
   }
 
   @Delete(':id')
-  remove(@Param('id') movieId: string) {
+  remove(@Param('id') movieId: number) {
     return this.MoviesService.deleteOne(movieId);
   }
 
   // @Body()에 updateData 추가
   @Patch(':id')
-  patch(@Param('id') movieId: string, @Body() updateData) {
+  patch(@Param('id') movieId: number, @Body() updateData: CreateMovieDto) {
     return this.MoviesService.update(movieId, updateData);
   }
 }
