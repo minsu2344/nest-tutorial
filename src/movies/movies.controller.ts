@@ -3,7 +3,7 @@ import { UpdateMovieDto } from './dto/update-movie.dto';
 import { Movie } from './entities/movie.entity';
 import { MoviesService } from './movies.service';
 import { Controller, Get, Post } from '@nestjs/common';
-import { Body, Delete, Param, Patch, Query } from '@nestjs/common/decorators';
+import { Body, Delete, Param, Patch, Query, Req, Res } from '@nestjs/common/decorators';
 
 // @Controller()에 있는 'movies가 컨트롤러의 기본 url이 됨
 // 따라서 @Get()을 해도 '/'가 아닌 '/movies'의 경로 지정
@@ -14,7 +14,8 @@ export class MoviesController {
 
   // getAll을 MovieService에서 가져오기
   @Get()
-  getAll(): Movie[] {
+  // nest에서 express의 req res 사용하기(좋은 방법은 아님)
+  getAll(@Req() req, @Res() res): Movie[] {
     return this.MoviesService.getAll();
   }
 
